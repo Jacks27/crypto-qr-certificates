@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Verify Token</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 600px; margin: 50px auto; background: #f5f7fa; }
+    .box { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
+    input[type="text"] { width: 100%; padding: 12px; font-size: 16px; margin: 10px 0; }
+    button { padding: 12px 24px; background: #3498db; color: white; border: none; border-radius: 6px; font-size: 16px; }
+    .success { background: #d5f4e6; padding: 20px; border-radius: 8px; margin: 20px 0; }
+    .error { background: #fdf2f2; color: #c0392b; padding: 20px; border-radius: 8px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+
+<div class="box">
+  <h1>Verify Certificate Token</h1>
+  <p>Paste a token or scan the QR code to verify authenticity.</p>
+
+  <form method="post">
+    <input type="text" name="token" placeholder="Paste token here..." value="{{ token or '' }}" autofocus>
+    <button type="submit">Verify Token</button>
+  </form>
+
+  <p style="text-align:center; margin: 30px 0;">
+    <a href="/">← Generate Tokens</a>
+  </p>
+
+  {% if result %}
+    <div class="success">
+      <h2>Valid Certificate</h2>
+      <p><strong>Name:</strong> {{ result.name }}</p>
+      <p><strong>Certificate ID:</strong> {{ result.cert_id }}</p>
+      <p><strong>Issued on:</strong> {{ result.issued_at }}</p>
+    </div>
+  {% endif %}
+
+  {% if error %}
+    <div class="error">
+      <strong>Error:</strong> {{ error }}
+    </div>
+  {% endif %}
+</div>
+
+</body>
+</html>

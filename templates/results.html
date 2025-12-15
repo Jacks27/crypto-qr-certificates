@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tokens & QR Codes Generated</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 40px; background: #f9f9f9; }
+    .card { 
+      background: white; padding: 20px; margin: 20px; border-radius: 12px; 
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1); float: left; width: 280px; text-align: center;
+    }
+    h1 { text-align: center; color: #2c3e50; }
+    .download-btn {
+      display: inline-block; padding: 10px 20px; background: #3498db; color: white;
+      text-decoration: none; border-radius: 6px; margin-top: 10px;
+    }
+    .download-btn { background: #27ae60; }
+    pre { background: #eee; padding: 10px; border-radius: 6px; font-size: 11px; }
+  </style>
+</head>
+<body>
+
+<h1>Tokens & QR Codes Ready!</h1>
+<p style="text-align:center;">{{ results|length }} certificate(s) generated</p>
+
+<div style="text-align:center; margin: 30px;">
+  <a href="{{ txt_download }}" class="download-btn">Download All Tokens as TXT</a>
+  <a href="/" style="margin-left:20px;">Generate More</a>
+</div>
+
+{% for r in results %}
+<div class="card">
+  <h3>{{ r.full_name }}</h3>
+  <p><strong>{{ r.cert_id }}</strong></p>
+
+  <!-- QR Code -->
+  <img src="data:image/png;base64,{{ r.qr_image_b64 }}" width="200" height="200" alt="QR">
+
+  <p><small>Scan to get token</small></p>
+
+  <a href="/static/{{ r.qr_download }}" download class="download-btn">
+    Download QR (PNG)
+  </a>
+
+  <pre>{{ r.first_name }}: {{ r.token }}</pre>
+</div>
+{% endfor %}
+
+<div style="clear:both;"></div>
+
+</body>
+</html>
